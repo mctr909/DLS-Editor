@@ -36,21 +36,12 @@ namespace DLS {
             }
         }
 
-        public void Write(FileStream fs) {
-            var bw = new BinaryWriter(fs);
-
-            bw.Write(Encoding.ASCII.GetBytes(LIST_ID));
-            bw.Write((uint)0);
-            bw.Write(Encoding.ASCII.GetBytes(ID));
-
-            var len = (uint)4;
+        protected override uint write(FileStream fs) {
+            var len = (uint)0;
             foreach (var wave in mList) {
-                len += wave.Write(fs);
+                len += wave.Write(fs, Wave.ID);
             }
-
-            fs.Seek(-len - 4, SeekOrigin.Current);
-            bw.Write(len);
-            fs.Seek(len, SeekOrigin.Current);
+            return len;
         }
     }
 
@@ -86,28 +77,16 @@ namespace DLS {
             }
         }
 
-        public uint Write(FileStream fs) {
-            var begin = fs.Position;
+        protected override uint write(FileStream fs) {
             var bw = new BinaryWriter(fs);
-
-            bw.Write(Encoding.ASCII.GetBytes(LIST_ID));
-            bw.Write((uint)0);
-            bw.Write(Encoding.ASCII.GetBytes(ID));
-
-            var len = (uint)4;
-            len += Info.Write(fs);
+            var len = Info.Write(fs);
             len += WaveSample.Write(fs);
             len += Format.Write(fs);
             len += (uint)Data.Length + 8;
             bw.Write(Encoding.ASCII.GetBytes(DATA_ID));
             bw.Write((uint)Data.Length);
             bw.Write(Data);
-
-            fs.Seek(-len - 4, SeekOrigin.Current);
-            bw.Write(len);
-            fs.Seek(len, SeekOrigin.Current);
-
-            return (uint)(fs.Position - begin);
+            return len;
         }
     }
 

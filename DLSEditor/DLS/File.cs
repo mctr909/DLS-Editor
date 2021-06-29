@@ -58,8 +58,8 @@ namespace DLS {
             bw.Write(Encoding.ASCII.GetBytes("DLS "));
 
             Info.Write(fs);
-            InstList.Write(fs);
-            WaveList.Write(fs);
+            InstList.Write(fs, InstList.ID);
+            WaveList.Write(fs, WaveList.ID);
 
             fs.Seek(4, SeekOrigin.Begin);
             bw.Write((uint)(fs.Length - 8));

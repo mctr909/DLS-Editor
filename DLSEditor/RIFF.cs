@@ -52,6 +52,7 @@ public abstract class RiffFile {
 public class RiffChunk {
     protected const string LIST_ID = "LIST";
     protected const string DATA_ID = "data";
+
     public RiffChunk() { }
 
     public RiffChunk(FileStream fs, uint size) {
@@ -74,6 +75,27 @@ public class RiffChunk {
         }
     }
 
+    public uint Write(FileStream fs, string id) {
+        var begin = fs.Position;
+        var bw = new BinaryWriter(fs);
+
+        bw.Write(Encoding.ASCII.GetBytes(LIST_ID));
+        bw.Write((uint)0);
+        bw.Write(Encoding.ASCII.GetBytes(id.PadRight(4).Substring(0, 4)));
+
+        var len = write(fs) + 4;
+
+        if (4 == len) {
+            fs.Seek(-12, SeekOrigin.Current);
+        } else {
+            fs.Seek(-len - 4, SeekOrigin.Current);
+            bw.Write(len);
+            fs.Seek(len, SeekOrigin.Current);
+        }
+
+        return (uint)(fs.Position - begin);
+    }
+
     protected virtual void loadChunk(FileStream fs, string type, uint size) {
         fs.Seek(size, SeekOrigin.Current);
     }
@@ -85,6 +107,8 @@ public class RiffChunk {
     protected virtual void loadInfo(FileStream fs, uint size) {
         fs.Seek(size, SeekOrigin.Current);
     }
+
+    protected virtual uint write(FileStream fs) { return 0; }
 }
 
 public sealed class RiffInfo {

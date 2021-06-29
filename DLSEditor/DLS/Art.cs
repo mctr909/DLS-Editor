@@ -37,28 +37,12 @@ namespace DLS {
             }
         }
 
-        public uint Write(FileStream fs) {
-            if (0 == mList.Count) {
-                return 0;
-            }
-
-            var begin = fs.Position;
-            var bw = new BinaryWriter(fs);
-
-            bw.Write(Encoding.ASCII.GetBytes(LIST_ID));
-            bw.Write((uint)0);
-            bw.Write(Encoding.ASCII.GetBytes(ID));
-
-            var len = (uint)4;
+        protected override uint write(FileStream fs) {
+            var len = (uint)0;
             foreach (var art in mList) {
                 len += art.Write(fs);
             }
-
-            fs.Seek(-len - 4, SeekOrigin.Current);
-            bw.Write(len);
-            fs.Seek(len, SeekOrigin.Current);
-
-            return (uint)(fs.Position - begin);
+            return len;
         }
     }
 
