@@ -41,6 +41,11 @@ namespace DLSEditor {
             lstPreset.Top = txtPresetSearchName.Bottom + 4;
             lstPreset.Left = 0;
 
+            txtWaveSearchName.Text = "";
+            cmbWaveSearchGroup.Text = "";
+            txtPresetSearchName.Text = "";
+            cmbPresetSearchGroup.Text = "";
+
             setSize();
         }
 
@@ -238,6 +243,30 @@ namespace DLSEditor {
         }
         #endregion
 
+        private void txtWaveSearchName_TextChanged(object sender, EventArgs e) {
+            dispWaveList();
+        }
+
+        private void cmbWaveSearchGroup_TextChanged(object sender, EventArgs e) {
+            dispWaveList();
+        }
+
+        private void cmbWaveSearchGroup_SelectedIndexChanged(object sender, EventArgs e) {
+            dispWaveList();
+        }
+
+        private void txtPresetSearchName_TextChanged(object sender, EventArgs e) {
+            dispPresetList();
+        }
+
+        private void cmbPresetSearchGroup_TextChanged(object sender, EventArgs e) {
+            dispPresetList();
+        }
+
+        private void cmbPresetSearchGroup_SelectedIndexChanged(object sender, EventArgs e) {
+            dispPresetList();
+        }
+
         private void setSize() {
             tabControl1.Width = Width - 24;
             tabControl1.Height = Height - menuStrip1.Height - tabPageWave.Top - 24;
@@ -248,12 +277,20 @@ namespace DLSEditor {
         }
 
         private void dispWaveList() {
+            var searchName = txtWaveSearchName.Text.ToLower();
+            var searchGroup = cmbWaveSearchGroup.Text.ToLower();
             lstWave.Items.Clear();
             for (int i = 0; i < mDls.WaveList.Count; i++) {
                 var wave = mDls.WaveList[i];
                 var smpl = wave.WaveSample;
-                var group = wave.Info.ContainsKey("ICAT") ? wave.Info["ICAT"] : "";
                 var name = wave.Info.ContainsKey("INAM") ? wave.Info["INAM"] : "";
+                var group = wave.Info.ContainsKey("ICAT") ? wave.Info["ICAT"] : "";
+                if (!string.IsNullOrWhiteSpace(searchName) && name.ToLower().IndexOf(searchName.Trim()) < 0) {
+                    continue;
+                }
+                if (!string.IsNullOrWhiteSpace(searchGroup) && group.ToLower().IndexOf(searchGroup.Trim()) < 0) {
+                    continue;
+                }
                 lstWave.Items.Add(string.Format(
                     "{0} | {1} | {2} | {3} | {4} | {5}",
                     i.ToString("00000"),
@@ -267,11 +304,19 @@ namespace DLSEditor {
         }
 
         private void dispPresetList() {
+            var searchName = txtPresetSearchName.Text.ToLower();
+            var searchGroup = cmbPresetSearchGroup.Text.ToLower();
             lstPreset.Items.Clear();
             for (int i = 0; i < mDls.InstList.Count; i++) {
                 var inst = mDls.InstList[i];
-                var group = inst.Info.ContainsKey("ICAT") ? inst.Info["ICAT"] : "";
                 var name = inst.Info.ContainsKey("INAM") ? inst.Info["INAM"] : "";
+                var group = inst.Info.ContainsKey("ICAT") ? inst.Info["ICAT"] : "";
+                if (!string.IsNullOrWhiteSpace(searchName) && name.ToLower().IndexOf(searchName.Trim()) < 0) {
+                    continue;
+                }
+                if (!string.IsNullOrWhiteSpace(searchGroup) && group.ToLower().IndexOf(searchGroup.Trim()) < 0) {
+                    continue;
+                }
                 lstPreset.Items.Add(string.Format(
                     "{0} | {1} | {2} | {3} | {4} | {5}",
                     inst.Header.IsDrum == 0x80 ? "Drum" : "Note",
@@ -308,7 +353,7 @@ namespace DLSEditor {
             fm.CmbGroup.Items.Clear();
             fm.ShowDialog();
         }
-    
+
         private List<int> getWaveIndex() {
             var list = new List<int>();
             foreach(int index in lstWave.SelectedIndices) {

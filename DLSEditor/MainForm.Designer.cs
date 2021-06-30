@@ -105,7 +105,7 @@ namespace DLSEditor {
             this.tsmDevice});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(961, 40);
+            this.menuStrip1.Size = new System.Drawing.Size(832, 40);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -294,7 +294,7 @@ namespace DLSEditor {
             this.tabControl1.Location = new System.Drawing.Point(12, 43);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(937, 395);
+            this.tabControl1.Size = new System.Drawing.Size(810, 395);
             this.tabControl1.TabIndex = 1;
             // 
             // tabPageWave
@@ -307,7 +307,7 @@ namespace DLSEditor {
             this.tabPageWave.Location = new System.Drawing.Point(8, 46);
             this.tabPageWave.Name = "tabPageWave";
             this.tabPageWave.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageWave.Size = new System.Drawing.Size(921, 341);
+            this.tabPageWave.Size = new System.Drawing.Size(794, 341);
             this.tabPageWave.TabIndex = 0;
             this.tabPageWave.Text = "波形リスト";
             this.tabPageWave.UseVisualStyleBackColor = true;
@@ -329,6 +329,8 @@ namespace DLSEditor {
             this.cmbWaveSearchGroup.Size = new System.Drawing.Size(398, 40);
             this.cmbWaveSearchGroup.TabIndex = 3;
             this.cmbWaveSearchGroup.Text = "----+----1----+----2----+----3--";
+            this.cmbWaveSearchGroup.SelectedIndexChanged += new System.EventHandler(this.cmbWaveSearchGroup_SelectedIndexChanged);
+            this.cmbWaveSearchGroup.TextChanged += new System.EventHandler(this.cmbWaveSearchGroup_TextChanged);
             // 
             // lblWaveSearchName
             // 
@@ -346,6 +348,7 @@ namespace DLSEditor {
             this.txtWaveSearchName.Size = new System.Drawing.Size(378, 39);
             this.txtWaveSearchName.TabIndex = 1;
             this.txtWaveSearchName.Text = "----+----1----+----2----+----3--";
+            this.txtWaveSearchName.TextChanged += new System.EventHandler(this.txtWaveSearchName_TextChanged);
             // 
             // lstWave
             // 
@@ -458,7 +461,7 @@ namespace DLSEditor {
             this.tabPagePreset.Location = new System.Drawing.Point(8, 46);
             this.tabPagePreset.Name = "tabPagePreset";
             this.tabPagePreset.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPagePreset.Size = new System.Drawing.Size(921, 341);
+            this.tabPagePreset.Size = new System.Drawing.Size(794, 341);
             this.tabPagePreset.TabIndex = 1;
             this.tabPagePreset.Text = "プリセットリスト";
             this.tabPagePreset.UseVisualStyleBackColor = true;
@@ -480,6 +483,8 @@ namespace DLSEditor {
             this.cmbPresetSearchGroup.Size = new System.Drawing.Size(398, 40);
             this.cmbPresetSearchGroup.TabIndex = 7;
             this.cmbPresetSearchGroup.Text = "----+----1----+----2----+----3--";
+            this.cmbPresetSearchGroup.SelectedIndexChanged += new System.EventHandler(this.cmbPresetSearchGroup_SelectedIndexChanged);
+            this.cmbPresetSearchGroup.TextChanged += new System.EventHandler(this.cmbPresetSearchGroup_TextChanged);
             // 
             // lblPresetSearchName
             // 
@@ -497,6 +502,7 @@ namespace DLSEditor {
             this.txtPresetSearchName.Size = new System.Drawing.Size(378, 39);
             this.txtPresetSearchName.TabIndex = 5;
             this.txtPresetSearchName.Text = "----+----1----+----2----+----3--";
+            this.txtPresetSearchName.TextChanged += new System.EventHandler(this.txtPresetSearchName_TextChanged);
             // 
             // lstPreset
             // 
@@ -588,7 +594,7 @@ namespace DLSEditor {
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(13F, 32F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(961, 450);
+            this.ClientSize = new System.Drawing.Size(832, 450);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
