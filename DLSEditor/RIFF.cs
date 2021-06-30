@@ -121,6 +121,10 @@ public sealed class RiffInfo {
 
     public int Count { get { return mList.Count; } }
 
+    public void Clear() { mList.Clear(); }
+
+    public void Add(string key, string value) { mList.Add(key, value); }
+
     public bool ContainsKey(string key) {
         return mList.ContainsKey(key);
     }

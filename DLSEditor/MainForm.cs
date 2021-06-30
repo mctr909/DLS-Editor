@@ -18,10 +18,29 @@ namespace DLSEditor {
         private void Form1_Load(object sender, EventArgs e) {
             tabControl1.Top = menuStrip1.Bottom;
             tabControl1.Left = 0;
-            lstWave.Top = 0;
+
+            lblWaveSearchName.Top = 0;
+            lblWaveSearchName.Left = 0;
+            txtWaveSearchName.Top = lblWaveSearchName.Bottom;
+            txtWaveSearchName.Left = 0;
+            lblWaveSearchGroup.Top = lblWaveSearchName.Top;
+            lblWaveSearchGroup.Left = txtWaveSearchName.Right + 8;
+            cmbWaveSearchGroup.Top = txtWaveSearchName.Top;
+            cmbWaveSearchGroup.Left = lblWaveSearchGroup.Left;
+            lstWave.Top = txtWaveSearchName.Bottom + 4;
             lstWave.Left = 0;
-            lstPreset.Top = 0;
+
+            lblPresetSearchName.Top = 0;
+            lblPresetSearchName.Left = 0;
+            txtPresetSearchName.Top = lblPresetSearchName.Bottom;
+            txtPresetSearchName.Left = 0;
+            lblPresetSearchGroup.Top = lblPresetSearchName.Top;
+            lblPresetSearchGroup.Left = txtPresetSearchName.Right + 8;
+            cmbPresetSearchGroup.Top = txtPresetSearchName.Top;
+            cmbPresetSearchGroup.Left = lblPresetSearchGroup.Left;
+            lstPreset.Top = txtPresetSearchName.Bottom + 4;
             lstPreset.Left = 0;
+
             setSize();
         }
 
@@ -85,6 +104,43 @@ namespace DLSEditor {
         #endregion
 
         #region MenuStrip[Edit]
+        private void tsmEditAdd_OnClick(object sender, EventArgs e) {
+            switch (tabControl1.SelectedTab.Name) {
+            case "tabPageWave":
+                break;
+            case "tabPagePreset":
+                break;
+            default:
+                break;
+            }
+        }
+
+        private void tsmEditDelete_OnClick(object sender, EventArgs e) {
+            switch (tabControl1.SelectedTab.Name) {
+            case "tabPageWave":
+                deleteWave();
+                break;
+            case "tabPagePreset":
+                deletePreset();
+                break;
+            default:
+                break;
+            }
+        }
+
+        private void tsmEditRename_OnClick(object sender, EventArgs e) {
+            switch (tabControl1.SelectedTab.Name) {
+            case "tabPageWave":
+                renameWave();
+                break;
+            case "tabPagePreset":
+                renamePreset();
+                break;
+            default:
+                break;
+            }
+        }
+
         private void tsmEditCut_OnClick(object sender, EventArgs e) {
             switch (tabControl1.SelectedTab.Name) {
             case "tabPageWave":
@@ -117,37 +173,13 @@ namespace DLSEditor {
                 break;
             }
         }
-
-        private void tsmEditAdd_OnClick(object sender, EventArgs e) {
-            switch (tabControl1.SelectedTab.Name) {
-            case "tabPageWave":
-                break;
-            case "tabPagePreset":
-                break;
-            default:
-                break;
-            }
-        }
-
-        private void tsmEditDelete_OnClick(object sender, EventArgs e) {
-            switch (tabControl1.SelectedTab.Name) {
-            case "tabPageWave":
-                deleteWave();
-                break;
-            case "tabPagePreset":
-                deletePreset();
-                break;
-            default:
-                break;
-            }
-        }
         #endregion
 
-        #region MenuStrip[Display]
-        private void tsmDisplayEdit_OnClick(object sender, EventArgs e) {
+        #region MenuStrip[Window]
+        private void tsmWindowEdit_OnClick(object sender, EventArgs e) {
         }
 
-        private void tsmDisplayRefList_OnClick(object sender, EventArgs e) {
+        private void tsmWindowRefList_OnClick(object sender, EventArgs e) {
         }
         #endregion
 
@@ -159,13 +191,60 @@ namespace DLSEditor {
         }
         #endregion
 
+        #region ContextMenu[Wave]
+        private void tsmWaveAdd_OnClick(object sender, EventArgs e) {
+        }
+
+        private void tsmWaveDelete_OnClick(object sender, EventArgs e) {
+            deleteWave();
+        }
+
+        private void tsmWaveRename_OnClick(object sender, EventArgs e) {
+            renameWave();
+        }
+
+        private void tsmWaveCut_OnClick(object sender, EventArgs e) {
+        }
+
+        private void tsmWaveCopy_OnClick(object sender, EventArgs e) {
+        }
+
+        private void tsmWavePaste_OnClick(object sender, EventArgs e) {
+        }
+
+        private void tsmWaveFile_OnClick(object sender, EventArgs e) {
+        }
+        #endregion
+
+        #region ContextMenu[Preset]
+        private void tsmPresetAdd_OnClick(object sender, EventArgs e) {
+        }
+
+        private void tsmPresetDelete_OnClick(object sender, EventArgs e) {
+            deletePreset();
+        }
+
+        private void tsmPresetRename_OnClick(object sender, EventArgs e) {
+            renamePreset();
+        }
+
+        private void tsmPresetCut_OnClick(object sender, EventArgs e) {
+        }
+
+        private void tsmPresetCopy_OnClick(object sender, EventArgs e) {
+        }
+
+        private void tsmPresetPaste_OnClick(object sender, EventArgs e) {
+        }
+        #endregion
+
         private void setSize() {
             tabControl1.Width = Width - 24;
             tabControl1.Height = Height - menuStrip1.Height - tabPageWave.Top - 24;
             lstWave.Width = tabControl1.Width - 16;
-            lstWave.Height = tabControl1.Height - 50;
+            lstWave.Height = tabControl1.Height - lstWave.Top - 50;
             lstPreset.Width = tabControl1.Width - 16;
-            lstPreset.Height = tabControl1.Height - 50;
+            lstPreset.Height = tabControl1.Height - lstPreset.Top - 50;
         }
 
         private void dispWaveList() {
@@ -206,24 +285,52 @@ namespace DLSEditor {
         }
 
         private void deleteWave() {
-            var list = new List<int>();
-            foreach(int index in lstWave.SelectedIndices) {
-                list.Add(index);
-            }
+            mDls.DeleteWaves(getWaveIndex());
             lstWave.SelectedIndex = -1;
-            mDls.DeleteWaves(list);
             dispWaveList();
         }
 
         private void deletePreset() {
-            var list = new List<int>();
-            foreach (int index in lstPreset.SelectedIndices) {
-                list.Add(index);
-            }
+            mDls.DeleteInst(getPresetHeader());
             lstPreset.SelectedIndex = -1;
-            mDls.DeleteInst(list);
             dispPresetList();
             dispWaveList();
+        }
+
+        private void renameWave() {
+            var fm = new RenameForm(this);
+            fm.CmbGroup.Items.Clear();
+            fm.ShowDialog();
+        }
+
+        private void renamePreset() {
+            var fm = new RenameForm(this);
+            fm.CmbGroup.Items.Clear();
+            fm.ShowDialog();
+        }
+    
+        private List<int> getWaveIndex() {
+            var list = new List<int>();
+            foreach(int index in lstWave.SelectedIndices) {
+                var cols = lstWave.Items[index].ToString().Split("|");
+                var waveIndex = int.Parse(cols[0].Trim());
+                list.Add(waveIndex);
+            }
+            return list;
+        }
+
+        private List<DLS.InstHeader> getPresetHeader() {
+            var list = new List<DLS.InstHeader>();
+            foreach (int index in lstPreset.SelectedIndices) {
+                var header = new DLS.InstHeader();
+                var cols = lstPreset.Items[index].ToString().Split("|");
+                header.IsDrum = (byte)("Drum" == cols[0].Trim() ? 0x80 : 0x00);
+                header.ProgNum = byte.Parse(cols[1].Trim());
+                header.BankMsb = byte.Parse(cols[2].Trim());
+                header.BankLsb = byte.Parse(cols[3].Trim());
+                list.Add(header);
+            }
+            return list;
         }
     }
 }

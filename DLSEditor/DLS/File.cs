@@ -111,11 +111,22 @@ namespace DLS {
             }
         }
 
-        public void DeleteInst(List<int> indexes) {
+        public void DeleteInst(List<InstHeader> headers) {
             var newInstList = new List<Inst>();
-            for (int index = 0; index < InstList.Count; index++) {
-                if (!indexes.Contains(index)) {
-                    newInstList.Add(InstList[index]);
+            for (int i = 0; i < InstList.Count; i++) {
+                var inst = InstList[i].Header;
+                var tagetInst = false;
+                foreach (var header in headers) {
+                    if (header.IsDrum == inst.IsDrum &&
+                        header.ProgNum == inst.ProgNum &&
+                        header.BankMsb == inst.BankMsb &&
+                        header.BankLsb == inst.BankLsb) {
+                        tagetInst = true;
+                        break;
+                    }
+                }
+                if (!tagetInst) {
+                    newInstList.Add(InstList[i]);
                 }
             }
             InstList.Clear();
