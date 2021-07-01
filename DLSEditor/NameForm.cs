@@ -1,10 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace DLSEditor {
-    public partial class RenameForm : Form {
-        public RenameForm(Form parent) {
+    public partial class NameForm : Form {
+        public bool Cancel = false;
+
+        public NameForm(Form parent) {
             InitializeComponent();
             Left = Cursor.Position.X - Width / 2;
             Top = Cursor.Position.Y - Height / 2;
@@ -29,11 +30,8 @@ namespace DLSEditor {
         }
 
         private void btnCancel_Click(object sender, EventArgs e) {
+            Cancel = true;
             Close();
-        }
-
-        private void txtName_TextChanged(object sender, EventArgs e) {
-
         }
     }
 }

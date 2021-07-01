@@ -13,6 +13,33 @@ namespace DLS {
             set { mList[index] = value; }
         }
 
+        public Inst this[InstHeader header] {
+            get {
+                for (int i = 0; i < mList.Count; i++) {
+                    var inst = mList[i].Header;
+                    if (header.IsDrum == inst.IsDrum
+                    && header.ProgNum == inst.ProgNum
+                    && header.BankMsb == inst.BankMsb
+                    && header.BankLsb == inst.BankLsb) {
+                        return mList[i];
+                    }
+                }
+                return null;
+            }
+            set {
+                for (int i = 0; i < mList.Count; i++) {
+                    var inst = mList[i].Header;
+                    if (header.IsDrum == inst.IsDrum
+                    && header.ProgNum == inst.ProgNum
+                    && header.BankMsb == inst.BankMsb
+                    && header.BankLsb == inst.BankLsb) {
+                        mList[i] = value;
+                        return;
+                    }
+                }
+            }
+        }
+
         public int Count { get { return mList.Count; } }
 
         public void Clear() { mList.Clear(); }
