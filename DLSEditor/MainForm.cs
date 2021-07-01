@@ -146,6 +146,19 @@ namespace DLSEditor {
             }
         }
 
+        private void tsmEditRegroup_OnClick(object sender, EventArgs e) {
+            switch (tabControl1.SelectedTab.Name) {
+            case "tabPageWave":
+                regroupWave();
+                break;
+            case "tabPagePreset":
+                regroupPreset();
+                break;
+            default:
+                break;
+            }
+        }
+
         private void tsmEditCut_OnClick(object sender, EventArgs e) {
             switch (tabControl1.SelectedTab.Name) {
             case "tabPageWave":
@@ -208,6 +221,10 @@ namespace DLSEditor {
             renameWave();
         }
 
+        private void tsmWaveRegroup_OnClick(object sender, EventArgs e) {
+            regroupWave();
+        }
+
         private void tsmWaveCut_OnClick(object sender, EventArgs e) {
         }
 
@@ -231,6 +248,10 @@ namespace DLSEditor {
 
         private void tsmPresetRename_OnClick(object sender, EventArgs e) {
             renamePreset();
+        }
+
+        private void tsmPresetRegroup_OnClick(object sender, EventArgs e) {
+            regroupPreset();
         }
 
         private void tsmPresetCut_OnClick(object sender, EventArgs e) {
@@ -343,11 +364,11 @@ namespace DLSEditor {
         }
 
         private void renameWave() {
-            var fm = new NameForm(this);
             var indexes = getWaveIndex();
             if (0 == indexes.Count) {
                 return;
             }
+            var fm = new NameForm(this);
             fm.TxtName.Text = "";
             if (1 == indexes.Count) {
                 var info = mDls.WaveList[indexes[0]].Info;
@@ -371,14 +392,14 @@ namespace DLSEditor {
         }
 
         private void renamePreset() {
-            var fm = new NameForm(this);
-            var header = getPresetHeader();
-            if (0 == header.Count) {
+            var headers = getPresetHeader();
+            if (0 == headers.Count) {
                 return;
             }
+            var fm = new NameForm(this);
             fm.TxtName.Text = "";
-            if (1 == header.Count) {
-                var info = mDls.InstList[header[0]].Info;
+            if (1 == headers.Count) {
+                var info = mDls.InstList[headers[0]].Info;
                 if (info.ContainsKey("INAM")) {
                     fm.TxtName.Text = info["INAM"];
                 }
@@ -387,12 +408,72 @@ namespace DLSEditor {
             if (fm.Cancel) {
                 return;
             }
-            for (int i = 0; i < header.Count; i++) {
-                var info = mDls.InstList[header[i]].Info;
+            foreach (var header in headers) {
+                var info = mDls.InstList[header].Info;
                 if (info.ContainsKey("INAM")) {
                     info["INAM"] = fm.TxtName.Text;
                 } else {
                     info.Add("INAM", fm.TxtName.Text);
+                }
+            }
+            dispPresetList();
+        }
+
+        private void regroupWave() {
+            var indexes = getWaveIndex();
+            if (0 == indexes.Count) {
+                return;
+            }
+            var fm = new GroupForm(this);
+            fm.CmbGroup.Items.Clear();
+            for (int i = 0; i < mDls.WaveList.Count; i++) {
+                var info = mDls.WaveList[i].Info;
+                if (info.ContainsKey("ICAT")) {
+                    if (!fm.CmbGroup.Items.Contains(info["ICAT"])) {
+                        fm.CmbGroup.Items.Add(info["ICAT"]);
+                    }
+                }
+            }
+            fm.ShowDialog();
+            if (fm.Cancel) {
+                return;
+            }
+            foreach (var index in indexes) {
+                var info = mDls.WaveList[index].Info;
+                if (info.ContainsKey("ICAT")) {
+                    info["ICAT"] = fm.CmbGroup.Text;
+                } else {
+                    info.Add("ICAT", fm.CmbGroup.Text);
+                }
+            }
+            dispWaveList();
+        }
+
+        private void regroupPreset() {
+            var headers = getPresetHeader();
+            if (0 == headers.Count) {
+                return;
+            }
+            var fm = new GroupForm(this);
+            fm.CmbGroup.Items.Clear();
+            for (int i = 0; i < mDls.InstList.Count; i++) {
+                var info = mDls.InstList[i].Info;
+                if (info.ContainsKey("ICAT")) {
+                    if (!fm.CmbGroup.Items.Contains(info["ICAT"])) {
+                        fm.CmbGroup.Items.Add(info["ICAT"]);
+                    }
+                }
+            }
+            fm.ShowDialog();
+            if (fm.Cancel) {
+                return;
+            }
+            foreach (var header in headers) {
+                var info = mDls.InstList[header].Info;
+                if (info.ContainsKey("ICAT")) {
+                    info["ICAT"] = fm.CmbGroup.Text;
+                } else {
+                    info.Add("ICAT", fm.CmbGroup.Text);
                 }
             }
             dispPresetList();

@@ -40,6 +40,7 @@ namespace DLSEditor {
             this.tsmEditDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.tssEdit = new System.Windows.Forms.ToolStripSeparator();
             this.tsmEditRename = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmEditRegroup = new System.Windows.Forms.ToolStripMenuItem();
             this.tssEdit2 = new System.Windows.Forms.ToolStripSeparator();
             this.tsmEditCut = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmEditCopy = new System.Windows.Forms.ToolStripMenuItem();
@@ -62,6 +63,7 @@ namespace DLSEditor {
             this.tsmWaveDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.tssWave = new System.Windows.Forms.ToolStripSeparator();
             this.tsmWaveRename = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmWaveRegroup = new System.Windows.Forms.ToolStripMenuItem();
             this.tssWave2 = new System.Windows.Forms.ToolStripSeparator();
             this.tsmWaveCut = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmWaveCopy = new System.Windows.Forms.ToolStripMenuItem();
@@ -79,6 +81,7 @@ namespace DLSEditor {
             this.tsmPresetDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.tssPreset = new System.Windows.Forms.ToolStripSeparator();
             this.tsmPresetRename = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmPresetRegroup = new System.Windows.Forms.ToolStripMenuItem();
             this.tssPreset2 = new System.Windows.Forms.ToolStripSeparator();
             this.tsmPresetCut = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmPresetCopy = new System.Windows.Forms.ToolStripMenuItem();
@@ -170,6 +173,7 @@ namespace DLSEditor {
             this.tsmEditDelete,
             this.tssEdit,
             this.tsmEditRename,
+            this.tsmEditRegroup,
             this.tssEdit2,
             this.tsmEditCut,
             this.tsmEditCopy,
@@ -206,6 +210,14 @@ namespace DLSEditor {
             this.tsmEditRename.Size = new System.Drawing.Size(425, 44);
             this.tsmEditRename.Text = "名称の変更(&N)";
             this.tsmEditRename.Click += new System.EventHandler(this.tsmEditRename_OnClick);
+            // 
+            // tsmEditRegroup
+            // 
+            this.tsmEditRegroup.Name = "tsmEditRegroup";
+            this.tsmEditRegroup.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.G)));
+            this.tsmEditRegroup.Size = new System.Drawing.Size(425, 44);
+            this.tsmEditRegroup.Text = "グループの変更(&G)";
+            this.tsmEditRegroup.Click += new System.EventHandler(this.tsmEditRegroup_OnClick);
             // 
             // tssEdit2
             // 
@@ -371,6 +383,7 @@ namespace DLSEditor {
             this.tsmWaveDelete,
             this.tssWave,
             this.tsmWaveRename,
+            this.tsmWaveRegroup,
             this.tssWave2,
             this.tsmWaveCut,
             this.tsmWaveCopy,
@@ -405,6 +418,13 @@ namespace DLSEditor {
             this.tsmWaveRename.Size = new System.Drawing.Size(265, 40);
             this.tsmWaveRename.Text = "名称の変更(&N)";
             this.tsmWaveRename.Click += new System.EventHandler(this.tsmWaveRename_OnClick);
+            // 
+            // tsmWaveRegroup
+            // 
+            this.tsmWaveRegroup.Name = "tsmWaveRegroup";
+            this.tsmWaveRegroup.Size = new System.Drawing.Size(265, 40);
+            this.tsmWaveRegroup.Text = "グループの変更(&G)";
+            this.tsmWaveRegroup.Click += new System.EventHandler(this.tsmWaveRegroup_OnClick);
             // 
             // tssWave2
             // 
@@ -525,6 +545,7 @@ namespace DLSEditor {
             this.tsmPresetDelete,
             this.tssPreset,
             this.tsmPresetRename,
+            this.tsmPresetRegroup,
             this.tssPreset2,
             this.tsmPresetCut,
             this.tsmPresetCopy,
@@ -557,6 +578,13 @@ namespace DLSEditor {
             this.tsmPresetRename.Size = new System.Drawing.Size(252, 40);
             this.tsmPresetRename.Text = "名称の変更(&N)";
             this.tsmPresetRename.Click += new System.EventHandler(this.tsmPresetRename_OnClick);
+            // 
+            // tsmPresetRegroup
+            // 
+            this.tsmPresetRegroup.Name = "tsmPresetRegroup";
+            this.tsmPresetRegroup.Size = new System.Drawing.Size(252, 40);
+            this.tsmPresetRegroup.Text = "グループの変更(&G)";
+            this.tsmPresetRegroup.Click += new System.EventHandler(this.tsmPresetRegroup_OnClick);
             // 
             // tssPreset2
             // 
@@ -632,6 +660,7 @@ namespace DLSEditor {
         private System.Windows.Forms.ToolStripMenuItem tsmEditDelete;
         private System.Windows.Forms.ToolStripSeparator tssEdit;
         private System.Windows.Forms.ToolStripMenuItem tsmEditRename;
+        private System.Windows.Forms.ToolStripMenuItem tsmEditRegroup;
         private System.Windows.Forms.ToolStripSeparator tssEdit2;
         private System.Windows.Forms.ToolStripMenuItem tsmEditCut;
         private System.Windows.Forms.ToolStripMenuItem tsmEditCopy;
@@ -652,6 +681,7 @@ namespace DLSEditor {
         private System.Windows.Forms.ToolStripMenuItem tsmWaveDelete;
         private System.Windows.Forms.ToolStripSeparator tssWave;
         private System.Windows.Forms.ToolStripMenuItem tsmWaveRename;
+        private System.Windows.Forms.ToolStripMenuItem tsmWaveRegroup;
         private System.Windows.Forms.ToolStripSeparator tssWave2;
         private System.Windows.Forms.ToolStripMenuItem tsmWaveCut;
         private System.Windows.Forms.ToolStripMenuItem tsmWaveCopy;
@@ -663,6 +693,7 @@ namespace DLSEditor {
         private System.Windows.Forms.ToolStripMenuItem tsmPresetDelete;
         private System.Windows.Forms.ToolStripSeparator tssPreset;
         private System.Windows.Forms.ToolStripMenuItem tsmPresetRename;
+        private System.Windows.Forms.ToolStripMenuItem tsmPresetRegroup;
         private System.Windows.Forms.ToolStripSeparator tssPreset2;
         private System.Windows.Forms.ToolStripMenuItem tsmPresetCut;
         private System.Windows.Forms.ToolStripMenuItem tsmPresetCopy;
