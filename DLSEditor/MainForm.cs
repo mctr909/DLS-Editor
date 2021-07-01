@@ -322,6 +322,15 @@ namespace DLSEditor {
                     name
                 ));
             }
+            cmbWaveSearchGroup.Items.Clear();
+            for (int i = 0; i < mDls.WaveList.Count; i++) {
+                var info = mDls.WaveList[i].Info;
+                if (info.ContainsKey("ICAT")) {
+                    if (!cmbWaveSearchGroup.Items.Contains(info["ICAT"])) {
+                        cmbWaveSearchGroup.Items.Add(info["ICAT"]);
+                    }
+                }
+            }
         }
 
         private void dispPresetList() {
@@ -347,6 +356,15 @@ namespace DLSEditor {
                     group.PadRight(20),
                     name
                 ));
+            }
+            cmbPresetSearchGroup.Items.Clear();
+            for (int i = 0; i < mDls.InstList.Count; i++) {
+                var info = mDls.InstList[i].Info;
+                if (info.ContainsKey("ICAT")) {
+                    if (!cmbPresetSearchGroup.Items.Contains(info["ICAT"])) {
+                        cmbPresetSearchGroup.Items.Add(info["ICAT"]);
+                    }
+                }
             }
         }
 
